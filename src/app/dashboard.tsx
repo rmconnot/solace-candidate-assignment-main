@@ -36,8 +36,8 @@ export default function Dashboard({ advocates }: Props) {
   };
 
   return (
-    <main style={{ margin: "24px" }}>
-      <h1>Solace Advocates</h1>
+    <main className="m-12">
+      <h1 className="text-2xl">Solace Advocates</h1>
       <br />
       <br />
       <div>
@@ -46,17 +46,22 @@ export default function Dashboard({ advocates }: Props) {
           Searching for: <span>{searchVal}</span>
         </p>
         <input
-          style={{ border: "1px solid black" }}
+          className="border mr-6 border-black"
           onChange={onChange}
           value={searchVal}
         />
-        <button onClick={onClick}>Reset Search</button>
+        <button
+          onClick={onClick}
+          className="bg-slate-500 hover:bg-slate-700 text-white py-2 px-4 rounded"
+        >
+          Reset Search
+        </button>
       </div>
       <br />
       <br />
       <table>
         <thead>
-          <tr>
+          <tr className="bg-stone-300">
             <th>First Name</th>
             <th>Last Name</th>
             <th>City</th>
