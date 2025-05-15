@@ -9,20 +9,20 @@ type Props = {
 
 export default function Dashboard({ advocates }: Props) {
   const [filteredAdvocates, setFilteredAdvocates] = useState(advocates);
+  const [searchVal, setSearchVal] = useState("");
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const searchTerm = e.target.value;
+    setSearchVal(e.target.value);
 
-    document.getElementById("search-term")!.innerHTML = searchTerm;
+    const searchTerm = e.target.value.toLowerCase();
 
-    console.log("filtering advocates...");
     const filteredAdvocates = advocates.filter((advocate: Advocate) => {
       return (
-        advocate.firstName.includes(searchTerm) ||
-        advocate.lastName.includes(searchTerm) ||
-        advocate.city.includes(searchTerm) ||
-        advocate.degree.includes(searchTerm) ||
-        advocate.specialties.includes(searchTerm) ||
+        advocate.firstName.toLowerCase().includes(searchTerm) ||
+        advocate.lastName.toLowerCase().includes(searchTerm) ||
+        advocate.city.toLowerCase().includes(searchTerm) ||
+        advocate.degree.toLowerCase().includes(searchTerm) ||
+        advocate.specialties.join().toLowerCase().includes(searchTerm) ||
         String(advocate.yearsOfExperience) === searchTerm
       );
     });
@@ -31,7 +31,7 @@ export default function Dashboard({ advocates }: Props) {
   };
 
   const onClick = () => {
-    console.log(advocates);
+    setSearchVal("");
     setFilteredAdvocates(advocates);
   };
 
@@ -43,9 +43,13 @@ export default function Dashboard({ advocates }: Props) {
       <div>
         <p>Search</p>
         <p>
-          Searching for: <span id="search-term"></span>
+          Searching for: <span>{searchVal}</span>
         </p>
-        <input style={{ border: "1px solid black" }} onChange={onChange} />
+        <input
+          style={{ border: "1px solid black" }}
+          onChange={onChange}
+          value={searchVal}
+        />
         <button onClick={onClick}>Reset Search</button>
       </div>
       <br />
