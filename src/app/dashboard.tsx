@@ -10,9 +10,11 @@ type Props = {
 export default function Dashboard({ advocates }: Props) {
   const [filteredAdvocates, setFilteredAdvocates] = useState(advocates);
   const [searchVal, setSearchVal] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchVal(e.target.value);
+    setIsLoading(true);
 
     const searchTerm = e.target.value.toLowerCase();
 
@@ -28,6 +30,7 @@ export default function Dashboard({ advocates }: Props) {
     });
 
     setFilteredAdvocates(filteredAdvocates);
+    setIsLoading(false);
   };
 
   const onClick = () => {
@@ -72,23 +75,27 @@ export default function Dashboard({ advocates }: Props) {
           </tr>
         </thead>
         <tbody>
-          {filteredAdvocates.map((advocate: Advocate) => {
-            return (
-              <tr key={advocate.id}>
-                <td>{advocate.firstName}</td>
-                <td>{advocate.lastName}</td>
-                <td>{advocate.city}</td>
-                <td>{advocate.degree}</td>
-                <td>
-                  {advocate.specialties.map((s, i) => (
-                    <div key={i}>{s}</div>
-                  ))}
-                </td>
-                <td>{advocate.yearsOfExperience}</td>
-                <td>{advocate.phoneNumber}</td>
-              </tr>
-            );
-          })}
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            filteredAdvocates.map((advocate: Advocate) => {
+              return (
+                <tr key={advocate.id}>
+                  <td>{advocate.firstName}</td>
+                  <td>{advocate.lastName}</td>
+                  <td>{advocate.city}</td>
+                  <td>{advocate.degree}</td>
+                  <td>
+                    {advocate.specialties.map((s, i) => (
+                      <div key={i}>{s}</div>
+                    ))}
+                  </td>
+                  <td>{advocate.yearsOfExperience}</td>
+                  <td>{advocate.phoneNumber}</td>
+                </tr>
+              );
+            })
+          )}
         </tbody>
       </table>
     </main>
