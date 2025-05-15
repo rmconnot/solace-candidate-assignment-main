@@ -2,6 +2,7 @@
 
 import { ChangeEvent, useState } from "react";
 import type { Advocate } from "@/types";
+import { formatPhoneNumber } from "@/utils/utils";
 
 type Props = {
   advocates: Advocate[];
@@ -91,7 +92,7 @@ export default function Dashboard({ advocates }: Props) {
                     ))}
                   </td>
                   <td>{advocate.yearsOfExperience}</td>
-                  <td>{advocate.phoneNumber}</td>
+                  <td>{formatPhoneNumber(advocate.phoneNumber)}</td>
                 </tr>
               );
             })
